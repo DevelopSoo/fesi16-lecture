@@ -1,7 +1,7 @@
 // app/layout.tsx
 
-import LazyMotionProvider from "@/providers/LazyMotionProvider";
 import "./globals.css";
+import Header from "@/components/Header";
 
 export default function RootLayout({
   children,
@@ -11,7 +11,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <LazyMotionProvider>{children}</LazyMotionProvider>
+        <Header />
+        {children}
       </body>
     </html>
   );
