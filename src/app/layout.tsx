@@ -1,7 +1,7 @@
 // app/layout.tsx
 
 import "./globals.css";
-import Header from "@/components/Header";
+import { MSWProvider } from "@/providers/MSWProvider";
 
 export default function RootLayout({
   children,
@@ -11,8 +11,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <MSWProvider>
+          <header>로고 + 메뉴</header>
+          {children}
+        </MSWProvider>
       </body>
     </html>
   );

@@ -1,0 +1,29 @@
+// src/providers/QueryProvider.tsx
+
+"use client";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+
+export default function QueryProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  // 캐시 저장 용도, 관리 기능
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000, // 1분
+            // 필요에 따라 다른 옵션 설정
+          },
+        },
+      }),
+  );
+
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+}

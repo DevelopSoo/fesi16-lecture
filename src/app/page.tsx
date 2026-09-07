@@ -1,42 +1,41 @@
-// Next.js 코드
+// src/app/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+type Post = {
+  id: number;
+  title: string;
+  body: string;
+};
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState<Post | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async () => {
-    const response = await fetch("http://localhost:4000/api/login", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-  };
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/posts/1");
+        setData(response.data);
+      } catch {
+        setError("데이터를 불러오는데 실패했습니다.");
+      }
+    };
+    fetchData();
+  }, []);
   return (
-    <div>
-      <h1>로그인 페이지</h1>
-      <input
-        type="text"
-        placeholder="아이디"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="비밀번호"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>로그인</button>
-      <a href="http://localhost:5173">악성 광고 링크 유도</a>
-    </div>
+    <ul>
+      {data && (
+        <li key={data.id} className="border p-4">
+          <h3 className="font-bold">
+            {data.id}: {data.title}
+          </h3>
+          <p>{data.body}</p>
+        </li>
+      )}
+      {error && <p className="text-red-500">{error}</p>}
+    </ul>
   );
 }
