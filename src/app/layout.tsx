@@ -10,12 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <MSWProvider>
-          <header>로고 + 메뉴</header>
-          {children}
-        </MSWProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
