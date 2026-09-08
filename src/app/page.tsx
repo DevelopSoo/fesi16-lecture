@@ -3,5 +3,5 @@
 'use client';
 
 export default function Home() {
-  return <>{process.env.NEXT_PUBLIC_MY_ENVIRONMENT}</>;
+  return <>vercel 커스텀 ci/cd 배포</>;
 }
